@@ -542,3 +542,173 @@ footer{
     }
 
 }
+```css
+/* LEARNING STACK */
+
+.learning-cart{
+    background: #38bdf8;
+    color: #0f172a;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.learning-cart:hover{
+    transform: scale(1.08);
+    box-shadow: 0 0 15px rgba(56,189,248,0.6);
+}
+
+#cart-count{
+    background: white;
+    color: #0f172a;
+    padding: 3px 9px;
+    border-radius: 50%;
+    margin-left: 6px;
+}
+
+
+
+/* ADD BUTTON */
+
+.add-btn{
+    margin-top: 15px;
+    border: none;
+    background: #0ea5e9;
+    color: white;
+    padding: 11px 24px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.add-btn:hover{
+    background: #38bdf8;
+    transform: scale(1.06);
+}
+
+
+
+/* MODAL */
+
+.cart-modal{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+}
+
+.cart-box{
+    width: 420px;
+    max-width: 90%;
+    background: #1e293b;
+    border-radius: 22px;
+    padding: 30px;
+    animation: popup 0.4s ease;
+}
+
+@keyframes popup{
+
+    from{
+        opacity: 0;
+        transform: scale(0.7);
+    }
+
+    to{
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.cart-box h2{
+    color: #38bdf8;
+    margin-bottom: 20px;
+}
+
+
+
+#cart-items{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+
+
+.cart-item{
+    background: #0f172a;
+    padding: 14px;
+    border-radius: 14px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.remove-btn{
+    border: none;
+    background: crimson;
+    color: white;
+    padding: 7px 11px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+
+
+.close-btn{
+    width: 100%;
+    border: none;
+    background: #38bdf8;
+    color: #0f172a;
+    padding: 13px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+
+/* NOTIFICATION */
+
+.notification{
+    position: fixed;
+    top: 30px;
+    right: 30px;
+
+    background: #38bdf8;
+    color: #0f172a;
+
+    padding: 15px 22px;
+
+    border-radius: 14px;
+
+    font-weight: bold;
+
+    z-index: 9999;
+
+    animation: slideIn 0.4s ease;
+}
+
+
+
+@keyframes slideIn{
+
+    from{
+        opacity: 0;
+        transform: translateX(100px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
