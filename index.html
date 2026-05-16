@@ -4,13 +4,692 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Programming Languages Library</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body{
+            background: #0f172a;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+
+        header{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .logo{
+            font-size: 30px;
+            font-weight: bold;
+            color: #38bdf8;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow{
+            from{ text-shadow: 0 0 5px #38bdf8; }
+            to{ text-shadow: 0 0 25px #38bdf8; }
+        }
+
+        nav ul{
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        nav a{
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: 0.4s;
+            position: relative;
+        }
+
+        nav a::after{
+            content: "";
+            width: 0%;
+            height: 2px;
+            background: #38bdf8;
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            transition: 0.4s;
+        }
+
+        nav a:hover::after{ width: 100%; }
+        nav a:hover{ color: #38bdf8; }
+
+        /* LEARNING STACK */
+
+        .learning-cart{
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .learning-cart:hover{
+            transform: scale(1.08);
+            box-shadow: 0 0 15px rgba(56,189,248,0.6);
+        }
+
+        #cart-count{
+            background: white;
+            color: #0f172a;
+            padding: 3px 9px;
+            border-radius: 50%;
+            margin-left: 6px;
+        }
+
+        /* HERO */
+
+        .hero{
+            height: 100vh;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #2563eb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .overlay{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+        }
+
+        .hero-content{
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 2s ease;
+        }
+
+        @keyframes fadeIn{
+            from{ opacity: 0; transform: translateY(50px); }
+            to{ opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-content h1{
+            font-size: 65px;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p{
+            width: 70%;
+            margin: auto;
+            font-size: 20px;
+            line-height: 1.8;
+        }
+
+        /* LANGUAGES */
+
+        .languages{
+            padding: 100px 60px;
+        }
+
+        .title{
+            text-align: center;
+            font-size: 45px;
+            margin-bottom: 70px;
+        }
+
+        .cards-container{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+            gap: 40px;
+        }
+
+        .card{
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 25px;
+            text-align: center;
+            transition: 0.5s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before{
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(56,189,248,0.1);
+            top: -100%;
+            left: 0;
+            transition: 0.5s;
+        }
+
+        .card:hover::before{ top: 0; }
+
+        .card:hover{
+            transform: translateY(-15px) scale(1.05);
+            box-shadow:
+                0 0 20px rgba(56,189,248,0.5),
+                0 0 40px rgba(56,189,248,0.3);
+        }
+
+        .card img{
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .card h3{
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .card p{
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .card a{
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background: #38bdf8;
+            font-weight: bold;
+            font-size: 15px;
+            padding: 10px 24px;
+            border-radius: 30px;
+            transition: 0.4s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card a:hover{
+            background: #0ea5e9;
+            transform: scale(1.08);
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(56,189,248,0.6);
+        }
+
+        /* ADD BUTTON */
+
+        .add-btn{
+            margin-top: 15px;
+            border: none;
+            background: #0ea5e9;
+            color: white;
+            padding: 11px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            display: block;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .add-btn:hover{
+            background: #38bdf8;
+            transform: scale(1.06);
+        }
+
+        /* ROADMAP */
+
+        .roadmap{
+            padding: 100px 60px;
+            background: #111827;
+        }
+
+        .roadmap-intro{
+            text-align: center;
+            color: #94a3b8;
+            font-size: 18px;
+            margin-top: -40px;
+            margin-bottom: 60px;
+        }
+
+        .roadmap-tracks{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .track{
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid transparent;
+            transition: 0.4s;
+        }
+
+        .track:hover{
+            border-color: #38bdf8;
+            box-shadow: 0 0 20px rgba(56,189,248,0.15);
+        }
+
+        .track-title{
+            font-size: 20px;
+            font-weight: bold;
+            color: #38bdf8;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .track-steps{
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .step{
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+
+        .step:hover{
+            background: #1a2744;
+        }
+
+        .step-num{
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #38bdf8;
+            color: #0f172a;
+            font-weight: bold;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .step-info h4{
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+
+        .step-info p{
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        .step-arrow{
+            text-align: center;
+            color: #38bdf8;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        /* ABOUT */
+
+        .about{
+            padding: 100px 60px;
+            background: #0f172a;
+            text-align: center;
+        }
+
+        .about h2{
+            font-size: 45px;
+            margin-bottom: 25px;
+        }
+
+        .about-intro{
+            width: 70%;
+            margin: 0 auto 60px;
+            font-size: 18px;
+            line-height: 2;
+            color: #d1d5db;
+        }
+
+        .about-grid{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            text-align: left;
+        }
+
+        .about-card{
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 30px;
+            transition: 0.4s;
+            border: 1px solid transparent;
+        }
+
+        .about-card:hover{
+            border-color: #38bdf8;
+            transform: translateY(-8px);
+            box-shadow: 0 0 20px rgba(56,189,248,0.2);
+        }
+
+        .about-icon{
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .about-card h3{
+            font-size: 20px;
+            color: #38bdf8;
+            margin-bottom: 12px;
+        }
+
+        .about-card p{
+            color: #cbd5e1;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* FAQ */
+
+        .faq{
+            padding: 100px 60px;
+            background: #111827;
+        }
+
+        .faq-container{
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .faq-item{
+            background: #1e293b;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .faq-item.open{
+            border-color: #38bdf8;
+        }
+
+        .faq-question{
+            width: 100%;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            padding: 22px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            text-align: left;
+            gap: 20px;
+            transition: color 0.3s;
+        }
+
+        .faq-question:hover{
+            color: #38bdf8;
+        }
+
+        .faq-icon{
+            font-size: 24px;
+            color: #38bdf8;
+            flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.open .faq-icon{
+            transform: rotate(45deg);
+        }
+
+        .faq-answer{
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s;
+            padding: 0 25px;
+        }
+
+        .faq-item.open .faq-answer{
+            max-height: 200px;
+            padding: 0 25px 22px;
+        }
+
+        .faq-answer p{
+            color: #cbd5e1;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* FOOTER */
+
+        footer{
+            background: #000;
+            padding: 60px 60px 30px;
+        }
+
+        .footer-content{
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-brand{ max-width: 280px; }
+
+        .footer-logo{
+            font-size: 26px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        .footer-brand p{
+            margin-top: 10px;
+            color: #94a3b8;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .footer-links h4{
+            color: #38bdf8;
+            font-size: 16px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .footer-links ul{
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links ul a{
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 15px;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .footer-links ul a:hover{
+            color: #38bdf8;
+            padding-left: 5px;
+        }
+
+        .footer-bottom{
+            border-top: 1px solid #1e293b;
+            padding-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            color: #64748b;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        /* MODAL */
+
+        .cart-modal{
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 5000;
+        }
+
+        .cart-box{
+            width: 420px;
+            max-width: 90%;
+            background: #1e293b;
+            border-radius: 22px;
+            padding: 30px;
+            animation: popup 0.4s ease;
+        }
+
+        @keyframes popup{
+            from{ opacity: 0; transform: scale(0.7); }
+            to{ opacity: 1; transform: scale(1); }
+        }
+
+        .cart-box h2{
+            color: #38bdf8;
+            margin-bottom: 20px;
+        }
+
+        #cart-items{
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .cart-item{
+            background: #0f172a;
+            padding: 14px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .remove-btn{
+            border: none;
+            background: crimson;
+            color: white;
+            padding: 7px 11px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .close-btn{
+            width: 100%;
+            border: none;
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 13px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* NOTIFICATION */
+
+        .notification{
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 15px 22px;
+            border-radius: 14px;
+            font-weight: bold;
+            z-index: 9999;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn{
+            from{ opacity: 0; transform: translateX(100px); }
+            to{ opacity: 1; transform: translateX(0); }
+        }
+
+        /* SCROLL FIX */
+
+        #home, #languages, #roadmap, #about, #faq, #footer{
+            scroll-margin-top: 120px;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width: 768px){
+            header{
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+
+            nav ul{
+                gap: 12px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav a{ font-size: 15px; }
+
+            .hero-content h1{ font-size: 36px; }
+
+            .hero-content p{
+                width: 90%;
+                font-size: 16px;
+            }
+
+            .languages, .roadmap, .about, .faq{
+                padding: 80px 20px;
+            }
+
+            .about-intro{ width: 95%; }
+
+            footer{ padding: 40px 20px 20px; }
+
+            .footer-content{ flex-direction: column; }
+
+            .footer-bottom{
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
 
     <!-- HEADER -->
     <header>
         <div class="logo">CodeLibrary</div>
+
         <nav>
             <ul>
                 <li><a href="#home">Գլխավոր</a></li>
@@ -21,6 +700,11 @@
                 <li><a href="#footer">Կապ</a></li>
             </ul>
         </nav>
+
+        <!-- LEARNING STACK -->
+        <div class="learning-cart" onclick="openCart()">
+            📚 My Stack <span id="cart-count">0</span>
+        </div>
     </header>
 
     <!-- HERO SECTION -->
@@ -39,48 +723,61 @@
     <!-- LANGUAGES -->
     <section class="languages" id="languages">
         <h2 class="title">Popular Programming Languages</h2>
+
         <div class="cards-container">
 
+            <!-- PYTHON -->
             <div class="card">
                 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Python">
                 <h3>Python</h3>
                 <p>Python-ը հարմար է AI, Automation, Backend և Data Science նախագծերի համար։</p>
                 <a href="https://www.w3schools.com/python/python_intro.asp" target="_blank">Կարդալ ավելին</a>
+                <button class="add-btn" onclick="addToCart('Python')">Add to Stack</button>
             </div>
 
+            <!-- JAVASCRIPT -->
             <div class="card">
                 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JavaScript">
                 <h3>JavaScript</h3>
                 <p>JavaScript-ը օգտագործվում է ինտերակտիվ և դինամիկ վեբ կայքերի համար։</p>
                 <a href="https://www.w3schools.com/js/" target="_blank">Կարդալ ավելին</a>
+                <button class="add-btn" onclick="addToCart('JavaScript')">Add to Stack</button>
             </div>
 
+            <!-- C++ -->
             <div class="card">
                 <img src="https://cdn-icons-png.flaticon.com/512/6132/6132222.png" alt="C++">
                 <h3>C++</h3>
                 <p>C++-ը արագ և հզոր լեզու է, որը օգտագործվում է խաղերի ու համակարգային ծրագրերի համար։</p>
                 <a href="https://www.w3schools.com/cpp/cpp_intro.asp" target="_blank">Կարդալ ավելին</a>
+                <button class="add-btn" onclick="addToCart('C++')">Add to Stack</button>
             </div>
 
+            <!-- JAVA -->
             <div class="card">
                 <img src="https://cdn-icons-png.flaticon.com/512/226/226777.png" alt="Java">
                 <h3>Java</h3>
                 <p>Java-ն լայն կիրառություն ունի Android և Backend ծրագրավորման մեջ։</p>
                 <a href="https://www.w3schools.com/java/java_intro.asp" target="_blank">Կարդալ ավելին</a>
+                <button class="add-btn" onclick="addToCart('Java')">Add to Stack</button>
             </div>
 
+            <!-- PHP -->
             <div class="card">
                 <img src="https://cdn-icons-png.flaticon.com/512/919/919830.png" alt="PHP">
                 <h3>PHP</h3>
                 <p>PHP-ն հիմնականում օգտագործվում է սերվերային և դինամիկ կայքերի համար։</p>
                 <a href="https://www.w3schools.com/php/" target="_blank">Կարդալ ավելին</a>
+                <button class="add-btn" onclick="addToCart('PHP')">Add to Stack</button>
             </div>
 
+            <!-- C# -->
             <div class="card">
                 <img src="https://cdn-icons-png.flaticon.com/512/6132/6132221.png" alt="C#">
                 <h3>C#</h3>
                 <p>C#-ը հարմար է Unity Game Development և Desktop ծրագրերի ստեղծման համար։</p>
                 <a href="https://www.w3schools.com/cs/cs_intro.php" target="_blank">Կարդալ ավելին</a>
+                <button class="add-btn" onclick="addToCart('C#')">Add to Stack</button>
             </div>
 
         </div>
@@ -318,6 +1015,7 @@
                     <li><a href="#faq">FAQ</a></li>
                 </ul>
             </div>
+            <!-- ✅ ԱՎԵԼԱՑՎԱԾ: Ռեսուրսներ սյուն -->
             <div class="footer-links">
                 <h4>Ռեսուրսներ</h4>
                 <ul>
@@ -333,13 +1031,72 @@
         </div>
     </footer>
 
+    <!-- MODAL -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-box">
+            <h2>📚 My Learning Stack</h2>
+            <div id="cart-items"></div>
+            <button class="close-btn" onclick="closeCart()">Փակել</button>
+        </div>
+    </div>
+
     <script>
-        function toggleFaq(btn) {
+
+        function toggleFaq(btn){
             const item = btn.parentElement;
             const isOpen = item.classList.contains('open');
             document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-            if (!isOpen) item.classList.add('open');
+            if(!isOpen){ item.classList.add('open'); }
         }
+
+        let learningStack = [];
+
+        function addToCart(language){
+            if(!learningStack.includes(language)){
+                learningStack.push(language);
+                updateCart();
+                showNotification(language + " added 🚀");
+            }else{
+                showNotification(language + " already exists ⚠️");
+            }
+        }
+
+        function updateCart(){
+            document.getElementById("cart-count").innerText = learningStack.length;
+            const cartItems = document.getElementById("cart-items");
+            cartItems.innerHTML = "";
+            learningStack.forEach((lang, index) => {
+                cartItems.innerHTML += `
+                    <div class="cart-item">
+                        <span>${lang}</span>
+                        <button class="remove-btn" onclick="removeItem(${index})">X</button>
+                    </div>
+                `;
+            });
+        }
+
+        function removeItem(index){
+            learningStack.splice(index, 1);
+            updateCart();
+            showNotification("Removed from stack ❌");
+        }
+
+        function openCart(){
+            document.getElementById("cartModal").style.display = "flex";
+        }
+
+        function closeCart(){
+            document.getElementById("cartModal").style.display = "none";
+        }
+
+        function showNotification(text){
+            const notif = document.createElement("div");
+            notif.classList.add("notification");
+            notif.innerText = text;
+            document.body.appendChild(notif);
+            setTimeout(() => { notif.remove(); }, 2000);
+        }
+
     </script>
 
 </body>
